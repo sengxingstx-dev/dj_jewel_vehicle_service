@@ -1,0 +1,340 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block page-wrapper %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" /> -->
+
+<!-- For bootstrap modal form -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="page-breadcrumb">
+    <div class="row align-items-center">
+      <div class="col-md-6 col-8 align-self-center">
+        <h3 class="page-title mb-0 p-0">Manage Car</h3>
+        <div class="d-flex align-items-center">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Manage Car</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+      <!-- <div class="col-md-6 col-4 align-self-center">
+        <div class="text-end upgrade-btn">
+          <a
+            href="https://www.wrappixel.com/templates/materialpro/"
+            class="btn btn-danger d-none d-md-inline-block text-white"
+            target="_blank"
+            >Upgrade to Pro</a
+          >
+        </div>
+      </div> -->
+    </div>
+  </div>
+  
+  <!-- ============================================================== -->
+  <!-- End Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Container fluid  -->
+  <!-- ============================================================== -->
+  <div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+      <!-- column -->
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Manage Car</h4>
+            <hr>            
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <a class=" btn btn-outline-info align-items-center" href="#" data-toggle="modal" data-target="#form">Add Car</a>
+
+              <div class="dropdown">
+                <button class="btn btn-outline-info dropdown-toggle align-items-center" type="button" id="exportDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Export
+                </button>
+                <div class="dropdown-menu" aria-labelledby="exportDropdown">
+                  <a class="dropdown-item" href="{% url 'export-cars-csv' %}">Export to CSV</a>
+                  <a class="dropdown-item" href="{% url 'export-cars-excel' %}">Export to Excel</a>
+                </div>
+              </div>
+
+              <!-- Search Form -->
+              <form method="get" action="" class="d-inline-flex" style="width: 80%;">
+                <div class="input-group">
+                    <select class="custom-select" name="search_by">
+                      <option value="model" {% if search_by == 'model' %}selected{% endif %}>Model</option>
+                      <option value="make" {% if search_by == 'make' %}selected{% endif %}>Make</option>
+                    </select>
+                    <input type="text" class="form-control" name="search" placeholder="Search" value="{{ search_query }}">
+            
+                    <!-- Checkboxes for Available and Category -->
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <!-- <select class="custom-select" name="category">
+                          <option value="" {% if not category %}selected{% endif %}>All Categories</option>
+                          <option value="2 wheels" {% if category == '2 wheels' %}selected{% endif %}>2 Wheels</option>
+                          <option value="4 wheels" {% if category == '4 wheels' %}selected{% endif %}>4 Wheels</option>
+                        </select> -->
+
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="checkbox" id="availableCheckbox" name="available" {% if available %}checked{% endif %}>
+                          <label class="form-check-label" for="availableCheckbox">Available</label>
+                        </div>
+                      </div>
+                      <button class="btn btn-outline-info" type="submit">
+                        <i class="fas fa-search"></i> Search
+                      </button>
+                    </div>
+                </div>
+            </form>
+            
+            </div>
+
+            <!-- =========================================================================== -->
+            <!-- Modal form  -->
+            <div class="modal fade" id="form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header border-bottom-0">
+                    <h5 class="modal-title" id="exampleModalLabel">Create Car</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                      <div class="form-group">
+                        <label for="model">Model</label>
+                        <input type="text" class="form-control" id="model" name="model" placeholder="Enter model">
+                      </div>
+                      <div class="form-group">
+                        <label for="make">Make</label>
+                        <input type="text" class="form-control" id="make" name="make" placeholder="Enter make">
+                      </div>
+                      <div class="form-group">
+                        <label for="price">Price</label>
+                        <input type="number" class="form-control" id="price" name="price" placeholder="Enter price">
+                      </div>
+                      <div class="form-group">
+                        <label for="category">Category</label>
+                        <select class="form-control" id="category" name="category">
+                            <option value="" selected disabled>Select a category</option>
+                            {% for category in categories %}
+                                <option value="{{ category.id }}">{{ category.category_name }}</option>
+                            {% endfor %}
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <div class="mb-3">
+                          <label for="formFile" class="form-label">Car Image</label>
+                          <input class="form-control" type="file" id="formFile" name="car_image" accept=".png, .jpg, .jpeg">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="available">Available</label>
+                        <div class="form-check">
+                          <input type="checkbox" class="form-check-input" id="available" name="available" checked>
+                          <label class="form-check-label" for="available">Check if available</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer border-top-0 d-flex justify-content-center">
+                      <button type="submit" class="btn btn-success" name="car_form_submit">Submit</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table user-table">
+                <thead>
+                  <tr>
+                    <th class="border-top-0">#</th>
+                    <th class="border-top-0">Image</th>
+                    <th class="border-top-0">Model</th>
+                    <th class="border-top-0">Make</th>
+                    <th class="border-top-0">Price</th>
+                    <th class="border-top-0">Available</th>
+                    <th class="border-top-0">Category</th>
+                    <th class="border-top-0">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for car in cars %}
+                  <tr>
+                    <td>{{ car.id }}</td>
+                    <td><img class="img-fluid img-thumbnail" src="{% if car.car_image %}{{ car.car_image.url }}{% else %} {{ car.id }} {% endif %}" alt="car image" width="50"></td>                
+                    <td>{{ car.model }}</td>
+                    <td>{{ car.make }}</td>
+                    <td>{{ car.price|intcomma }} Kip</td>
+                    <td>{{ car.available }}</td>
+                    <td>{{ car.category.category_name }}</td>
+                    <td>
+                      <a class="btn btn-outline-warning" href="#" data-toggle="modal" data-target="#form-{{ car.id }}">Edit</a>
+                      <a class="btn btn-outline-danger" href="#" data-toggle="modal" data-target="#confirmDeleteModal-{{ car.id }}">Delete</a>
+
+                      <!-- Delete Confirmation Modal -->
+                      <!-- =========================================================================== -->
+                      <div class="modal fade my-modal" id="confirmDeleteModal-{{ car.id }}" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Delete</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+
+                            <form action="{% url 'delete-car' car.id %}" method="POST">
+                              {% csrf_token %}
+                              <div class="modal-body">
+                                Are you sure you want to delete this car?
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                              </div>
+                            </form>
+                            
+                          </div>
+                        </div>
+                      </div>
+                      <!-- End Delete Confirmation -->
+                      <!-- =========================================================================== -->
+
+                      <!-- Edit Car Modal Form -->
+                      <!-- =========================================================================== -->
+                      <div class="modal fade" id="form-{{ car.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                              <h5 class="modal-title" id="exampleModalLabel">Edit Car</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <form method="POST" action="{% url 'edit-car' car.id %}" enctype="multipart/form-data">
+                              {% csrf_token %}
+                              <div class="modal-body">
+                                <div class="form-group">
+                                  <label for="model">Model</label>
+                                  <input type="text" class="form-control" id="model" name="model" value="{{ car.model }}" placeholder="Enter model">
+                                </div>
+                                <div class="form-group">
+                                  <label for="make">Make</label>
+                                  <input type="text" class="form-control" id="make" name="make" value="{{ car.make }}" placeholder="Enter make">
+                                </div>
+                                <div class="form-group">
+                                  <label for="price">Price</label>
+                                  <input type="number" class="form-control" id="price" name="price" value="{{ car.price }}" placeholder="Enter price">
+                                </div>
+                                <div class="form-group">
+                                  <label for="category">Category</label>
+                                  <select class="form-control" id="category" name="category">
+                                      <option value="" selected disabled>Select a category</option>
+                                      {% for category in categories %}
+                                          <option value="{{ category.id }}" {% if car.category.id == category.id %}selected{% endif %}>{{ category.category_name }}</option>
+                                      {% endfor %}
+                                  </select>
+                                </div>
+                                <div class="form-group">
+                                  <div class="mb-3">
+                                    <label for="formFile" class="form-label">Car Image</label><br>
+                                    {% if car.car_image %}
+                                    <img src="{{ car.car_image.url }}" alt="Current Car Image" class="img-thumbnail" width="150">
+                                    {% endif %}
+                                    <input class="form-control" type="file" id="formFile" name="car_image" accept=".png, .jpg, .jpeg">
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <label for="available-{{ car.id }}">Available</label>
+                                  <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="available-{{ car.id }}" name="available" {% if car.available %}checked{% endif %}>
+                                    <label class="form-check-label" for="available-{{ car.id }}">Check if available</label>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="modal-footer border-top-0 d-flex justify-content-center">
+                                <button type="submit" class="btn btn-success" name="car_form_submit_edit">Submit</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- End Edit Car Modal  -->
+                      <!-- =========================================================================== -->
+
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End PAge Content -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Right sidebar -->
+    <!-- ============================================================== -->
+    <!-- .right-sidebar -->
+    <!-- ============================================================== -->
+    <!-- End Right sidebar -->
+    <!-- ============================================================== -->
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Container fluid  -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- footer -->
+  <!-- ============================================================== -->
+  <footer class="footer">
+    © 2021 Material Pro Admin by
+    <a href="https://www.wrappixel.com/">wrappixel.com </a>
+  </footer>
+  <!-- ============================================================== -->
+  <!-- End footer -->
+  <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Page wrapper  -->
+<!-- ============================================================== -->
+{% endblock page-wrapper %}
+
+{% block script %}
+<!-- ============================================================== -->
+<!-- All Jquery -->
+<!-- ============================================================== -->
+<script src="{% static 'dashboard/assets/plugins/jquery/dist/jquery.min.js' %}"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script src="{% static 'dashboard/assets/plugins/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'dashboard/js/app-style-switcher.js' %}"></script>
+<!--Wave Effects -->
+<script src="{% static 'dashboard/js/waves.js' %}"></script>
+<!--Menu sidebar -->
+<script src="{% static 'dashboard/js/sidebarmenu.js' %}"></script>
+<!--Custom JavaScript -->
+<script src="{% static 'dashboard/js/custom.js' %}"></script>
+{% endblock script %}

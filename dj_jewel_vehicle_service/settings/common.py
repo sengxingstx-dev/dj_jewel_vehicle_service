@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -37,6 +38,7 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
 ]
 
 PROJECT_APPS = [
@@ -52,6 +54,7 @@ INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -64,7 +67,9 @@ ROOT_URLCONF = 'dj_jewel_vehicle_service.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR / 'templates',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -102,21 +107,53 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+# Available Languages
+LANGUAGES = [
+    ('en', _('English')),
+    ('lo', _('Lao')),
+]
+
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'Asia/Vientiane'
 
+# If you set this to False, Django will make some optimizations so as not
+# to load the internationalization machinery.
+# True if you want to support localization
 USE_I18N = True
 
+# If you set this to False, Django will not format dates, numbers and
+# Use calendars according to the current locale.
+USE_L10N = True
+
 USE_TZ = True
+
+# Locales available path
+LOCALE_PATHS = [BASE_DIR / 'locale']
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+
+# MEDIA_ROOT: This is the directory where user uploaded media files will be saved.
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'mediafiles'
+
+FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760  # 10MB=10×1024×1024B=10,485,760B.
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+AUTH_USER_MODEL = "account.Account"
+
+LOGIN_URL = 'login'  # Specify the URL to redirect users to if they are not logged in
+LOGOUT_URL = 'home'

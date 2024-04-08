@@ -1,0 +1,187 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load custom_humanize %}
+{% block page-wrapper %}
+<!-- ============================================================== -->
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="page-breadcrumb">
+    <div class="row align-items-center">
+      <div class="col-md-6 col-8 align-self-center">
+        <h3 class="page-title mb-0 p-0">Dashboard</h3>
+        <div class="d-flex align-items-center">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">
+                Dashboard
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+      <!-- <div class="col-md-6 col-4 align-self-center">
+        <div class="text-end upgrade-btn">
+          <a
+            href="https://www.wrappixel.com/templates/materialpro/"
+            class="btn btn-danger d-none d-md-inline-block text-white"
+            target="_blank"
+            >Upgrade to Pro</a
+          >
+        </div>
+      </div> -->
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Container fluid  -->
+  <!-- ============================================================== -->
+  <div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Sales chart -->
+    <!-- ============================================================== -->
+    <div class="row">
+      <!-- Column -->
+      <div class="col-md-4">
+        <div class="card bg-primary text-white">
+          <div class="card-header">
+            Total Agents
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{ total_agents }}</h5>
+            <!-- <p class="card-text">Total number of available cars for rent.</p> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card bg-primary text-white">
+          <div class="card-header">
+            Total Customers
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{ total_customers }}</h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card bg-primary text-white">
+          <div class="card-header">
+            Total Cars
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{ total_cars }}</h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card bg-success text-white">
+          <div class="card-header">
+            Available Cars
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{ available_cars }}</h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card bg-success text-white">
+          <div class="card-header">
+            User Bookings
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{ total_bookings }}</h5>
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-md-4">
+        <div class="card bg-success text-white">
+          <div class="card-header">
+            Total Revenue
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">LAK {{ total_revenue|intcomma }}</h5>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="container mt-5">
+      <h2>Recent Bookings</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Customer</th>
+            <th scope="col">Car</th>
+            <th scope="col">Rental Start Date</th>
+            <th scope="col">Rental End Date</th>
+            <th scope="col">Total Cost</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for booking in recent_bookings %}
+            <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+              <td>{{ booking.customer }}</td>
+              <td>{{ booking.car }}</td>
+              <td>{{ booking.rental_start_date|format_lao_date }}</td>
+              <td>{{ booking.rental_end_date|format_lao_date }}</td>
+              <td>{{ booking.total_cost|intcomma }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Container fluid  -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- footer -->
+  <!-- ============================================================== -->
+  <footer class="footer">
+    © 2021 Material Pro Admin by
+    <a href="https://www.wrappixel.com/">wrappixel.com </a>
+  </footer>
+  <!-- ============================================================== -->
+  <!-- End footer -->
+  <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Page wrapper  -->
+<!-- ============================================================== -->
+{% endblock page-wrapper %} {% block script %}
+<script src="{% static 'dashboard/assets/plugins/jquery/dist/jquery.min.js' %}"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script src="{% static 'dashboard/assets/plugins/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'dashboard/js/app-style-switcher.js' %}"></script>
+<!--Wave Effects -->
+<script src="{% static 'dashboard/js/waves.js' %}"></script>
+<!--Menu sidebar -->
+<script src="{% static 'dashboard/js/sidebarmenu.js' %}"></script>
+<!-- ============================================================== -->
+<!-- This page plugins -->
+<!-- ============================================================== -->
+<!-- chartist chart -->
+<!-- <script src="{% static 'dashboard/assets/plugins/chartist-js/dist/chartist.min.js' %}"></script> -->
+<!-- <script src="{% static 'dashboard/assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js' %}"></script> -->
+<!--c3 JavaScript -->
+<script src="{% static 'dashboard/assets/plugins/d3/d3.min.js' %}"></script>
+<script src="{% static 'dashboard/assets/plugins/c3-master/c3.min.js' %}"></script>
+<!--Custom JavaScript -->
+<!-- <script src="{% static 'dashboard/js/pages/dashboards/dashboard1.js' %}"></script> -->
+<script src="{% static 'dashboard/js/custom.js' %}"></script>
+{% endblock script %}

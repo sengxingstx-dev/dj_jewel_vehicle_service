@@ -1,0 +1,124 @@
+{% load static %}
+<title>
+  Jewel Vehicle Service | Rental Form
+</title>
+<!-- Favicon icon -->
+<link
+  rel="icon"
+  type="image/png"
+  sizes="16x16"
+  href="{% static 'dashboard/assets/images/favicon.png' %}"
+/>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+<!-- Vendor CSS Files -->
+<link href="{% static 'jewel_vehicle_service/assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+<!-- Template Main CSS File -->
+<link href="{% static 'jewel_vehicle_service/css/style.css' %}" rel="stylesheet">
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-6 offset-md-3 border p-4 shadow bg-light">
+      <div class="col-12">
+        <h3 class="fw-normal text-secondary fs-4 text-uppercase mb-4">
+          Car rental form
+        </h3>
+      </div>
+      <form action="" method="POST">
+        {% csrf_token %}
+        <div class="row g-3">
+          <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="First Name"
+              {% if agent %}
+              value="{{ agent.first_name }}"
+              {% else %}
+              value="{{ customer.first_name }}"
+              {% endif %}
+              readonly
+            />
+          </div>
+          <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Last Name"
+              {% if agent %}
+              value="{{ agent.last_name }}"
+              {% else %}
+              value="{{ customer.last_name }}"
+              {% endif %}
+              readonly
+            />
+          </div>
+          <div class="col-md-6">
+            <input type="tel" class="form-control" placeholder="Phone Number"
+              {% if agent %}
+              value="{{ agent.phone }}"
+              {% else %}
+              value="{{ customer.phone }}"
+              {% endif %}
+              readonly
+            />
+          </div>
+          <div class="col-md-6">
+            <input
+              type="email"
+              class="form-control"
+              placeholder="Email"
+              {% if agent %}
+              value="{{ agent.email }}"
+              {% else %}
+              value="{{ customer.email }}"
+              {% endif %}
+              readonly
+            />
+          </div>
+          <div class="col-md-12">
+            <input
+              type="number"
+              name="total_cost"
+              class="form-control"
+              placeholder="Price"
+              value="{{ car.price }}"
+              readonly
+            />
+          </div>
+          <div class="col-md-6">
+            <label for="start-date">Pick start date</label>
+            <input type="datetime-local" id="start-date" name="rental_start_date" class="form-control" placeholder="Enter Start Date" />
+          </div>
+          <div class="col-md-6">
+            <label for="end-date">Pick end date</label>
+            <input type="datetime-local" id="end-date" name="rental_end_date" class="form-control" placeholder="Enter End Date" />
+          </div>
+          <!-- <div class="col-md-6">
+            <input type="time" class="form-control" placeholder="Enter Time" />
+          </div> -->
+          <!-- <div class="col-12">
+            <select class="form-select">
+              <option selected>Purpose Of Appointment</option>
+              <option value="1">Web Design</option>
+              <option value="2">Web Development</option>
+              <option value="3">IOS Developemt</option>
+            </select>
+          </div> -->
+          <!-- <div class="col-12">
+            <textarea class="form-control" placeholder="Message"></textarea>
+          </div> -->
+          <div class="col-12 mt-5">
+            <button type="submit" class="btn btn-primary float-end">
+              Next
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary float-end me-2"
+              onclick="window.history.back();"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

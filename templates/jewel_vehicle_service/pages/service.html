@@ -1,0 +1,70 @@
+{% extends 'jewel_vehicle_service/base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- ======= Hero Section ======= -->
+{% include 'jewel_vehicle_service/partials/hero-section-service.html' %}
+
+<!-- ======= Services Section ======= -->
+<section id="services" class="services section-bg">
+  <div class="container" data-aos="fade-up">
+
+    <div class="section-title">
+      <h2>Services</h2>
+      <p>Travel in Laos is easier than before, especially with the relatively recent upgrading
+        of the country's main roadways, the easing of visa regulation and the increasing variety
+        of accommodation.
+      </p>
+    </div>
+
+    <div class="row">
+      <div class="col-xl-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+        <div class="icon-box">
+          <!-- <div class="icon"><i class="bx bxl-dribbble"></i></div> -->
+          <img src="{% static 'jewel_vehicle_service/assets/img/Car-rental-in-Laos.jpg' %}" alt="Car Rental" class="img-fluid">
+          <hr>
+          <h4><a href="{% url 'home' %}#team">Car Rental Service</a></h4>
+          <p>We have several kind of vehicles for self driving. Kindly contact us for more details. 
+            Rent a car and enjoy your drive in Laos !
+          </p>
+        </div>
+      </div>
+
+      <div class="col-xl-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
+        <div class="icon-box">
+          <!-- <div class="icon"><i class="bx bx-file"></i></div> -->
+          <img src="{% static 'jewel_vehicle_service/assets/img/coming-soon.jpg' %}" alt="Coming Soon" class="img-fluid">
+          <hr>
+          <h4><a href="#cycling">Cycling Adventure Laos</a></h4>
+          <p>
+            A truck - aka "Song theaw" in Laos can support tour group with luggage, bicycles or kayak,
+            inflatable kayak etc...
+          </p>
+        </div>
+      </div>
+
+      <div class="col-xl-4 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0" data-aos="zoom-in" data-aos-delay="300">
+        <div class="icon-box">
+          <!-- <div class="icon"><i class="bx bx-tachometer"></i></div> -->
+          <img src="{% static 'jewel_vehicle_service/assets/img/coming-soon.jpg' %}" alt="Coming Soon" class="img-fluid">
+          <hr>
+          <h4><a href="#minivan">Minivan support</a></h4>
+          <p>
+            Comforatble Toyota with aircondition is great choice for touring around Laos.
+          </p>
+        </div>
+      </div>
+
+      <!-- <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0" data-aos="zoom-in" data-aos-delay="400">
+        <div class="icon-box">
+          <div class="icon"><i class="bx bx-layer"></i></div>
+          <h4><a href="">Nemo Enim</a></h4>
+          <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+        </div>
+      </div> -->
+
+    </div>
+
+  </div>
+</section><!-- End Services Section -->
+{% endblock content %}

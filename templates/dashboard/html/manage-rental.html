@@ -1,0 +1,298 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load custom_humanize %}
+{% block page-wrapper %}
+
+<!-- For bootstrap modal form -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="page-breadcrumb">
+    <div class="row align-items-center">
+      <div class="col-md-6 col-8 align-self-center">
+        <h3 class="page-title mb-0 p-0">Manage Rental</h3>
+        <div class="d-flex align-items-center">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Manage Rental</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+      <!-- <div class="col-md-6 col-4 align-self-center">
+        <div class="text-end upgrade-btn">
+          <a
+            href="https://www.wrappixel.com/templates/materialpro/"
+            class="btn btn-danger d-none d-md-inline-block text-white"
+            target="_blank"
+            >Upgrade to Pro</a
+          >
+        </div>
+      </div> -->
+    </div>
+  </div>
+  
+  <!-- ============================================================== -->
+  <!-- End Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Container fluid  -->
+  <!-- ============================================================== -->
+  <div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+      <!-- column -->
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Manage Rental</h4>
+            <hr>            
+            <!-- <a class="card-subtitle btn btn-outline-info" href="#" data-toggle="modal" data-target="#form">Add Rental</a> -->
+
+            <div class="dropdown">
+              <button class="btn btn-outline-info dropdown-toggle align-items-center" type="button" id="exportDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Export
+              </button>
+              <div class="dropdown-menu" aria-labelledby="exportDropdown">
+                <a class="dropdown-item" href="{% url 'export-rentals-csv' %}">Export to CSV</a>
+                <a class="dropdown-item" href="{% url 'export-rentals-excel' %}">Export to Excel</a>
+              </div>
+            </div>
+
+            <!-- =========================================================================== -->
+            <!-- Modal form  -->
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+            <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+            <div class="modal fade" id="form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header border-bottom-0">
+                    <h5 class="modal-title" id="exampleModalLabel">Create Rental</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                      <div class="form-group">
+                        <label for="customer">Customer</label>
+                        <select class="form-control" id="customer" name="customer">
+                            <option value="" selected disabled>Select a customer</option>
+                            {% for customer in customers %}
+                                <option value="{{ customer.id }}">{{ customer.user }}</option>
+                            {% endfor %}
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="car">Car</label>
+                        <select class="form-control" id="car" name="car">
+                          <option value="" selected disabled>Select a car</option>
+                          {% for car in cars %}
+                              <option value="{{ car.id }}">{{ car.model }} - {{ car.make }}</option>
+                          {% endfor %}
+                      </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="start-date">Pick start date</label>
+                        <input type="datetime-local" id="start-date" name="rental_start_date" class="form-control" placeholder="Enter Start Date" />
+                      </div>
+                      <div class="form-group">
+                        <label for="end-date">Pick end date</label>
+                        <input type="datetime-local" id="end-date" name="rental_end_date" class="form-control" placeholder="Enter End Date" />
+                      </div>
+                      <div class="form-group">
+                        <label for="total_cost">Total Cost</label>
+                        <input type="number" class="form-control" id="total_cost" name="total_cost" placeholder="Enter Total Cost">
+                      </div>
+                    </div>
+                    <div class="modal-footer border-top-0 d-flex justify-content-center">
+                      <button type="submit" class="btn btn-success" name="car_form_submit">Submit</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table user-table">
+                <thead>
+                  <tr>
+                    <th class="border-top-0">#</th>
+                    <th class="border-top-0">Customer</th>
+                    <th class="border-top-0">Car</th>
+                    <th class="border-top-0">Total Cost</th>
+                    <th class="border-top-0">Start Date</th>
+                    <th class="border-top-0">End Date</th>
+                    <th class="border-top-0">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for rent in rental %}
+                  <tr>
+                    <td>{{ rent.id }}</td>
+                    <td>{{ rent.customer }}</td>
+                    <td>{{ rent.car }}</td>
+                    <td>{{ rent.total_cost|intcomma }} Kip</td>
+                    <td>{{ rent.rental_start_date|date:"d-m-Y" }}, {{ rent.rental_start_date|time:"H:i" }}</td>
+                    <td>{{ rent.rental_end_date|date:"d-m-Y" }}, {{ rent.rental_end_date|time:"H:i" }}</td>
+                    <td>
+                      <!-- <a class="btn btn-outline-warning" href="#" data-toggle="modal" data-target="#form-{{ rent.id }}">Edit</a> -->
+                      <a class="btn btn-outline-danger" href="#" data-toggle="modal" data-target="#confirmDeleteModal-{{ rent.id }}">Delete</a>
+
+                      <!-- Delete Confirmation Modal -->
+                      <!-- =========================================================================== -->
+                      <div class="modal fade my-modal" id="confirmDeleteModal-{{ rent.id }}" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Delete</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+
+                            <form action="{% url 'delete-rental' rent.id %}" method="POST">
+                              {% csrf_token %}
+                              <div class="modal-body">
+                                Are you sure you want to delete this rental?
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                              </div>
+                            </form>
+                            
+                          </div>
+                        </div>
+                      </div>
+                      <!-- End Delete Confirmation -->
+                      <!-- =========================================================================== -->
+
+                      <!-- Edit Rental Modal Form -->
+                      <!-- =========================================================================== -->
+                      <div class="modal fade" id="form-{{ rent.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                              <h5 class="modal-title" id="exampleModalLabel">Edit Rental</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <form method="POST" action="{% url 'edit-rental' rent.id %}" enctype="multipart/form-data">
+                              {% csrf_token %}
+                              <div class="modal-body">
+                                <div class="form-group">
+                                  <label for="customer">Customer</label>
+                                  <select class="form-control" id="customer" name="customer">
+                                      <option value="" selected disabled>Select a customer</option>
+                                      {% for customer in customers %}
+                                          <option value="{{ customer.id }}" {% if rent.customer.id == customer.id %}selected{% endif %}>{{ customer.user }}</option>
+                                      {% endfor %}
+                                  </select>
+                                </div>
+                                <div class="form-group">
+                                  <label for="car">Car</label>
+                                  <select class="form-control" id="car" name="car">
+                                      <option value="" selected disabled>Select a car</option>
+                                      {% for car in cars %}
+                                          <option value="{{ car.id }}" {% if rent.car.id == car.id %}selected{% endif %}>{{ car.model }} - {{ car.make }}</option>
+                                      {% endfor %}
+                                  </select>
+                                </div>
+                                <div class="form-group">
+                                  <label for="start-date">Pick start date</label>
+                                  <input type="datetime-local" id="start-date" name="rental_start_date" class="form-control" placeholder="Enter Start Date"
+                                    value="{{ rent.rental_start_date|date:'Y-m-d\TH:i' }}"
+                                  />
+                                </div>
+                                <div class="form-group">
+                                  <label for="end-date">Pick end date</label>
+                                  <input type="datetime-local" id="end-date" name="rental_end_date" class="form-control" placeholder="Enter End Date"
+                                    value="{{ rent.rental_end_date|date:'Y-m-d\TH:i' }}"
+                                  />
+                                </div>
+                                <div class="form-group">
+                                  <label for="total-cost">Total Cost</label>
+                                  <input type="number" class="form-control" id="total-cost" name="total_cost" value="{{ rent.total_cost }}" placeholder="Enter total cost">
+                                </div>
+                              </div>
+                              <div class="modal-footer border-top-0 d-flex justify-content-center">
+                                <button type="submit" class="btn btn-success" name="car_form_submit_edit">Submit</button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- End Edit Rental Modal  -->
+                      <!-- =========================================================================== -->
+
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End PAge Content -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Right sidebar -->
+    <!-- ============================================================== -->
+    <!-- .right-sidebar -->
+    <!-- ============================================================== -->
+    <!-- End Right sidebar -->
+    <!-- ============================================================== -->
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Container fluid  -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- footer -->
+  <!-- ============================================================== -->
+  <footer class="footer">
+    © 2021 Material Pro Admin by
+    <a href="https://www.wrappixel.com/">wrappixel.com </a>
+  </footer>
+  <!-- ============================================================== -->
+  <!-- End footer -->
+  <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Page wrapper  -->
+<!-- ============================================================== -->
+{% endblock page-wrapper %}
+
+{% block script %}
+<!-- ============================================================== -->
+<!-- All Jquery -->
+<!-- ============================================================== -->
+<script src="{% static 'dashboard/assets/plugins/jquery/dist/jquery.min.js' %}"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script src="{% static 'dashboard/assets/plugins/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'dashboard/js/app-style-switcher.js' %}"></script>
+<!--Wave Effects -->
+<script src="{% static 'dashboard/js/waves.js' %}"></script>
+<!--Menu sidebar -->
+<script src="{% static 'dashboard/js/sidebarmenu.js' %}"></script>
+<!--Custom JavaScript -->
+<script src="{% static 'dashboard/js/custom.js' %}"></script>
+{% endblock script %}

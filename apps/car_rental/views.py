@@ -184,11 +184,13 @@ def manage_agent_view(request):
             if form.is_valid():
                 user = form.save(commit=False)
                 email = form.cleaned_data['email'].lower()
+                first_name = form.cleaned_data.get('first_name')
+                last_name = form.cleaned_data.get('last_name')
+                phone = form.cleaned_data.get('phone')
                 user.is_staff = True
                 user.save()
                 agent = RentalAgent.objects.create(
-                    user=user,
-                    email=email,
+                    user=user, email=email, first_name=first_name, last_name=last_name, phone=phone
                 )
                 messages.success(request, 'Agent created successfully.')
             else:

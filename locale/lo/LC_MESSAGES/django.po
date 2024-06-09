@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-02 14:32+0700\n"
+"POT-Creation-Date: 2024-05-28 20:29+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,44 +17,149 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: .\apps\account\templates\account\login.html:80
+#: .\apps\account\templates\account\login.html:107
+#: .\apps\account\templates\account\register.html:173
+#: .\templates\jewel_vehicle_service\base.html:110
+msgid "Login"
+msgstr "ເຂົ້າສູ່ລະບົບ"
+
+#: .\apps\account\templates\account\login.html:128
+msgid "Don't have an account?"
+msgstr "ຍັງບໍທັນມີບັນຊີເທື່ອ?"
+
+#: .\apps\account\templates\account\login.html:130
+#: .\apps\account\templates\account\register.html:150
+msgid "Sign up"
+msgstr "ລົງທະບຽນ"
+
+#: .\apps\account\templates\account\register.html:80
+msgid "Registration"
+msgstr "ລົງທະບຽນ"
+
+#: .\apps\account\templates\account\register.html:171
+msgid "Already have an account?"
+msgstr "ມີບັນຊີແລ້ວ?"
+
 #: .\dj_jewel_vehicle_service\settings\common.py:112
-#: .\templates\jewel_vehicle_service\base.html:72
+#: .\templates\jewel_vehicle_service\base.html:86
 msgid "English"
 msgstr "ພາສາອັງກິດ"
 
 #: .\dj_jewel_vehicle_service\settings\common.py:113
-#: .\templates\jewel_vehicle_service\base.html:77
+#: .\templates\jewel_vehicle_service\base.html:91
 msgid "Lao"
 msgstr "ພາສາລາວ"
 
-#: .\templates\jewel_vehicle_service\base.html:53
+#: .\templates\jewel_vehicle_service\base.html:67
 msgid "Home"
 msgstr "ໜ້າຫຼັກ"
 
-#: .\templates\jewel_vehicle_service\base.html:54
+#: .\templates\jewel_vehicle_service\base.html:68
 msgid "About"
 msgstr "ກ່ຽວກັບ"
 
-#: .\templates\jewel_vehicle_service\base.html:55
+#: .\templates\jewel_vehicle_service\base.html:69
+#: .\templates\jewel_vehicle_service\pages\service.html:14
 msgid "Services"
 msgstr "ບໍລິການ"
 
-#: .\templates\jewel_vehicle_service\base.html:56
+#: .\templates\jewel_vehicle_service\base.html:70
 msgid "Portfolio"
 msgstr "ຄັງຮູບ"
 
-#: .\templates\jewel_vehicle_service\base.html:58
+#: .\templates\jewel_vehicle_service\base.html:72
+#: .\templates\jewel_vehicle_service\pages\contact.html:14
 msgid "Contact"
 msgstr "ຕິດຕໍ່"
 
-#: .\templates\jewel_vehicle_service\base.html:93
+#: .\templates\jewel_vehicle_service\base.html:107
 msgid "Profile"
 msgstr "ໂປຣໄຟລ໌"
 
-#: .\templates\jewel_vehicle_service\base.html:94
+#: .\templates\jewel_vehicle_service\base.html:108
 msgid "Logout"
 msgstr "ອອກຈາກລະບົບ"
 
-#: .\templates\jewel_vehicle_service\base.html:96
-msgid "Login"
-msgstr "ເຂົ້າສູ່ລະບົບ"
+#: .\templates\jewel_vehicle_service\home.html:65
+msgid "Car Rental"
+msgstr "ບໍລິການເຊົ່າລົດ"
+
+#: .\templates\jewel_vehicle_service\home.html:84
+#, fuzzy
+#| msgid "Rent now"
+msgid "Rental Car Info"
+msgstr "ຈອງເລີຍ"
+
+#: .\templates\jewel_vehicle_service\home.html:85
+msgid "Model"
+msgstr "ລູ້ນ"
+
+#: .\templates\jewel_vehicle_service\home.html:86
+msgid "Make"
+msgstr "ຍີ່ຫໍ້"
+
+#: .\templates\jewel_vehicle_service\home.html:87
+msgid "Price"
+msgstr "ລາຄາ"
+
+#: .\templates\jewel_vehicle_service\home.html:88
+msgid "Category"
+msgstr "ປະເພດລົດ"
+
+#: .\templates\jewel_vehicle_service\home.html:89
+msgid "Available"
+msgstr "ຫວ່າງ"
+
+#: .\templates\jewel_vehicle_service\home.html:92
+#: .\templates\jewel_vehicle_service\home.html:101
+msgid "Rent now"
+msgstr "ຈອງເລີຍ"
+
+#: .\templates\jewel_vehicle_service\pages\about.html:14
+msgid "About us"
+msgstr "ກ່ຽວກັບ"
+
+#: .\templates\jewel_vehicle_service\pages\service.html:15
+msgid ""
+"Travel in Laos is easier than before, especially with the relatively recent "
+"upgrading of the country's main roadways, the easing of visa regulation and "
+"the increasing variety of accommodation."
+msgstr "ການເດີນທາງໃນລາວແມ່ນສະດວກກວ່າແຕ່ກ່ອນ, ໂດຍສະເພາະການຍົກລະດັບເສັ້ນທາງຫຼັກຂອງປະເທດ, ການຜ່ອນຜັນຂອງລະບຽບວີຊ່າ ແລະ ການທີ່ພັກອາໄສທີ່ຫຼາກຫຼາຍເພີ່ມຂຶ້ນ."
+
+#: .\templates\jewel_vehicle_service\pages\service.html:25
+msgid "Car Rental Service"
+msgstr "ບໍລິການເຊົ່າລົດ"
+
+#: .\templates\jewel_vehicle_service\pages\service.html:26
+msgid ""
+"We have several kind of vehicles for self driving. Kindly contact us for "
+"more details. Rent a car and enjoy your drive in Laos!"
+msgstr "ພວກ​ເຮົາ​ມີ​ພາ​ຫະ​ນະ​ຫຼາຍ​ປະ​ເພດ​ສໍາ​ລັບ​ການ​ຂັບ​ລົດ​ດ້ວຍ​ຕົນ​ເອງ​. ກະລຸນາຕິດຕໍ່ພວກເຮົາສໍາລັບລາຍລະອຽດເພີ່ມເຕີມ. ເຊົ່າລົດ ແລະ ມ່ວນຊື່ນກັບການຂັບຂີ່ໃນປະເທດລາວ!"
+
+#: .\templates\jewel_vehicle_service\pages\service.html:36
+msgid "Cycling Adventure Laos"
+msgstr "ບໍລິການປັ່ນລົດຖີບ"
+
+#: .\templates\jewel_vehicle_service\pages\service.html:38
+msgid ""
+"A truck - aka Song theaw in Laos can support tour group with luggage, "
+"bicycles or kayak, inflatable kayak etc..."
+msgstr "ລົດບັນທຸກ - aka Song theaw ໃນລາວສາມາດສະຫນັບສະຫນູນກຸ່ມການທ່ອງທ່ຽວທີ່ມີກະເປົາ, ລົດຖີບຫຼືເຮືອຄາຍັກ, kayak ອັດຕາເງິນເຟີ້ແລະອື່ນໆ ..."
+
+#: .\templates\jewel_vehicle_service\pages\service.html:48
+msgid "Minivan support"
+msgstr "ລົດມິນິແວນສັບພອດ"
+
+#: .\templates\jewel_vehicle_service\pages\service.html:50
+msgid ""
+"Comforatble Toyota with aircondition is great choice for touring around Laos."
+msgstr "ໂຕໂຍຕ້າທີ່ສະດວກສະບາຍພ້ອມເຄື່ອງປັບອາກາດເປັນທາງເລືອກທີ່ດີສໍາລັບການທ່ອງທ່ຽວທົ່ວລາວ."
+
+#: .\templates\jewel_vehicle_service\partials\hero-section-home.html:16
+msgid "Get Started"
+msgstr "ເລີ່ມຈອງ"
+
+#: .\templates\jewel_vehicle_service\partials\hero-section-home.html:17
+msgid "Watch Video"
+msgstr "ຮັບຊົມວີດີໂອ"

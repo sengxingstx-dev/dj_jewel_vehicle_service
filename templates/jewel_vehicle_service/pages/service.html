@@ -1,5 +1,6 @@
 {% extends 'jewel_vehicle_service/base.html' %}
 {% load static %}
+{% load i18n %}
 {% block content %}
 
 <!-- ======= Hero Section ======= -->
@@ -10,10 +11,8 @@
   <div class="container" data-aos="fade-up">
 
     <div class="section-title">
-      <h2>Services</h2>
-      <p>Travel in Laos is easier than before, especially with the relatively recent upgrading
-        of the country's main roadways, the easing of visa regulation and the increasing variety
-        of accommodation.
+      <h2>{% trans "Services" %}</h2>
+      <p>{% trans "Travel in Laos is easier than before, especially with the relatively recent upgrading of the country's main roadways, the easing of visa regulation and the increasing variety of accommodation." %}
       </p>
     </div>
 
@@ -23,9 +22,8 @@
           <!-- <div class="icon"><i class="bx bxl-dribbble"></i></div> -->
           <img src="{% static 'jewel_vehicle_service/assets/img/Car-rental-in-Laos.jpg' %}" alt="Car Rental" class="img-fluid">
           <hr>
-          <h4><a href="{% url 'home' %}#team">Car Rental Service</a></h4>
-          <p>We have several kind of vehicles for self driving. Kindly contact us for more details. 
-            Rent a car and enjoy your drive in Laos !
+          <h4><a href="{% url 'home' %}#team">{% trans "Car Rental Service" %}</a></h4>
+          <p>{% trans "We have several kind of vehicles for self driving. Kindly contact us for more details. Rent a car and enjoy your drive in Laos!" %}
           </p>
         </div>
       </div>
@@ -35,10 +33,9 @@
           <!-- <div class="icon"><i class="bx bx-file"></i></div> -->
           <img src="{% static 'jewel_vehicle_service/assets/img/coming-soon.jpg' %}" alt="Coming Soon" class="img-fluid">
           <hr>
-          <h4><a href="#cycling">Cycling Adventure Laos</a></h4>
+          <h4><a href="#cycling">{% trans "Cycling Adventure Laos" %}</a></h4>
           <p>
-            A truck - aka "Song theaw" in Laos can support tour group with luggage, bicycles or kayak,
-            inflatable kayak etc...
+            {% trans "A truck - aka Song theaw in Laos can support tour group with luggage, bicycles or kayak, inflatable kayak etc..." %}
           </p>
         </div>
       </div>
@@ -48,9 +45,9 @@
           <!-- <div class="icon"><i class="bx bx-tachometer"></i></div> -->
           <img src="{% static 'jewel_vehicle_service/assets/img/coming-soon.jpg' %}" alt="Coming Soon" class="img-fluid">
           <hr>
-          <h4><a href="#minivan">Minivan support</a></h4>
+          <h4><a href="#minivan">{% trans "Minivan support" %}</a></h4>
           <p>
-            Comforatble Toyota with aircondition is great choice for touring around Laos.
+            {% trans "Comforatble Toyota with aircondition is great choice for touring around Laos." %}
           </p>
         </div>
       </div>

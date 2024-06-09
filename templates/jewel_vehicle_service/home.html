@@ -1,5 +1,6 @@
 {% extends 'jewel_vehicle_service/base.html' %}
 {% load static %}
+{% load i18n %}
 {% load custom_humanize %}
 {% block content %}
 <!-- ======= Hero Section ======= -->
@@ -61,7 +62,7 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>Car Rental</h2>
+          <h2>{% trans "Car Rental" %}</h2>
           <!-- <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p> -->
         </div>
 
@@ -80,15 +81,15 @@
 
               <div class="member-info">
                 <h4>Jewel Vehicle</h4>
-                <span>Rental Car Info</span>
-                <p>Model: {{ car.model }}</p>
-                <p>Make: {{ car.make }}</p>
-                <p>Price: {{ car.price|intcomma }} Kip</p>
-                <p>Category:{{ car.category.category_name }}</p>
-                <p>Available:{{ car.available }}</p>
+                <span>{% trans "Rental Car Info" %}:</span>
+                <p>{% trans "Model" %}: {{ car.model }}</p>
+                <p>{% trans "Make" %}: {{ car.make }}</p>
+                <p>{% trans "Price" %}: {{ car.price|intcomma }} Kip</p>
+                <p>{% trans "Category" %}:{{ car.category.category_name }}</p>
+                <p>{% trans "Available" %}:{{ car.available }}</p>
                 <br>
                 {% if car.available %}
-                <a class="btn btn-danger text-uppercase scrollto" href="{% url 'rental' car.id %}">Rent now</a>
+                <a class="btn btn-danger text-uppercase scrollto" href="{% url 'rental' car.id %}">{% trans "Rent now" %}</a>
                 {% else %}
                 <style>
                   .disabled-link {
@@ -97,7 +98,7 @@
                     color: grey; /* Optional: Change text color to indicate the link is disabled */
                   }
                 </style>
-                <a class="btn btn-danger text-uppercase disabled-link scrollto" href="#booknow" disabled>Rent now</a>
+                <a class="btn btn-danger text-uppercase disabled-link scrollto" href="#booknow" disabled>{% trans "Rent now" %}</a>
                 {% endif %}
               </div>
             </div>
@@ -280,7 +281,7 @@
     <!-- End Skills Section -->
 
     <!-- ======= Cta Section ======= -->
-    <section id="cta" class="cta">
+    <!-- <section id="cta" class="cta">
       <div class="container" data-aos="zoom-in">
 
         <div class="row">
@@ -294,7 +295,7 @@
         </div>
 
       </div>
-    </section>
+    </section> -->
     <!-- End Cta Section -->
 
     <!-- ======= Pricing Section ======= -->

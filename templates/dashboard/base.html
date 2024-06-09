@@ -50,6 +50,19 @@
     />
     <!-- Custom CSS -->
     <link href="{% static 'dashboard/css/style.min.css' %}" rel="stylesheet" />
+
+    <style>
+      @font-face {
+        font-family: 'NotoSansLao';
+        src: url('../../static/fonts/NotoSansLao-Regular.ttf'),
+      }
+
+      * {
+        * {
+          font-family: "NotoSansLao" !important;
+        }
+      }
+    </style>
   </head>
 
   <body>
@@ -181,8 +194,8 @@
                   />{{ request.user.username }}
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="{% url 'admin-profile' %}">Profile</a>
-                  <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                  <a class="dropdown-item" href="{% url 'admin-profile' %}">ໂປຣໄຟລ໌</a>
+                  <a class="dropdown-item" href="{% url 'logout' %}">ອອກຈາກລະບົບ</a>
                 </ul>
               </li>
             </ul>
@@ -209,7 +222,7 @@
                   href="{% url 'dashboard' %}"
                   aria-expanded="false"
                   ><i class="mdi me-2 mdi-gauge"></i
-                  ><span class="hide-menu">Dashboard</span></a
+                  ><span class="hide-menu">ໜ້າແດສບອດ</span></a
                 >
               </li>
               <li class="sidebar-item">
@@ -219,7 +232,7 @@
                   aria-expanded="false"
                 >
                   <i class="mdi me-2 mdi-account-check"></i
-                  ><span class="hide-menu">Profile</span></a
+                  ><span class="hide-menu">ໂປຣໄຟລ໌</span></a
                 >
               </li>
               <!-- <li class="sidebar-item">
@@ -239,7 +252,7 @@
                   href="{% url 'manage-agent' %}"
                   aria-expanded="false"
                   ><i class="mdi me-2 mdi-account-card-details"></i
-                  ><span class="hide-menu">Manage Agent</span></a
+                  ><span class="hide-menu">ຈັດການພະນັກງານ</span></a
                 >
               </li>
               <li class="sidebar-item">
@@ -248,7 +261,7 @@
                   href="{% url 'manage-customer' %}"
                   aria-expanded="false"
                   ><i class="mdi me-2 mdi-account-multiple"></i
-                  ><span class="hide-menu">Manage Customer</span></a
+                  ><span class="hide-menu">ຈັດການລູກຄ້າ</span></a
                 >
               </li>
               {% endif %}
@@ -259,7 +272,7 @@
                   href="{% url 'manage-car' %}"
                   aria-expanded="false"
                   ><i class="mdi me-2 mdi-car"></i
-                  ><span class="hide-menu">Manage Car</span></a
+                  ><span class="hide-menu">ຈັດການລົດ</span></a
                 >
               </li>
               <li class="sidebar-item">
@@ -268,7 +281,7 @@
                   href="{% url 'manage-category' %}"
                   aria-expanded="false"
                   ><i class="mdi me-2 mdi-bookmark"></i
-                  ><span class="hide-menu">Manage Category</span></a
+                  ><span class="hide-menu">ຈັດການປະເພດລົດ</span></a
                 >
               </li>
               <li class="sidebar-item">
@@ -277,7 +290,7 @@
                   href="{% url 'manage-rental' %}"
                   aria-expanded="false"
                   ><i class="mdi me-2 mdi-car-connected"></i
-                  ><span class="hide-menu">Manage Rental</span></a
+                  ><span class="hide-menu">ຈັດການການເຊົ່າລົດ</span></a
                 >
               </li>
               <li class="sidebar-item">
@@ -286,7 +299,7 @@
                   href="{% url 'manage-payment' %}"
                   aria-expanded="false"
                   ><i class="mdi me-2 mdi-cash"></i
-                  ><span class="hide-menu">Manage Payment</span></a
+                  ><span class="hide-menu">ຈັດການການຊຳລະເງີນ</span></a
                 >
               </li>
               <li class="sidebar-item">

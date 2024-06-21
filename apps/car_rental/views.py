@@ -66,7 +66,7 @@ def book_now_view(request):
                 print(f"Error: {e}")
                 return redirect('error-page')  # Redirect to an error page
 
-            return redirect('payment-receipt', pk=payment.id)  # Redirect to a success page
+            return redirect('payment-receipt', pk=rental.id)  # Redirect to a success page
         else:
             # If either form is not valid, you may want to handle this case
             # For example, you can display an error message or redirect to an error page
@@ -86,10 +86,13 @@ def payment_receipt_view(request, pk):
     try:
         rental = Rental.objects.get(id=pk)
         payment = Payment.objects.get(rental=rental)
+
+        nights = (rental.rental_end_date - rental.rental_start_date).days
+        price = rental.car.price
     except Payment.DoesNotExist:
         raise Http404('Payment does not exist.')
 
-    context = {'payment': payment}
+    context = {'payment': payment, 'rental': rental, 'nights': nights, 'price': price}
     return render(request, 'jewel_vehicle_service/pages/payment-receipt.html', context)
 
 
@@ -262,7 +265,7 @@ def delete_customer_view(request, pk):
 
 def manage_car_view(request):
     agent = RentalAgent.objects.get(user=request.user)
-    cars = Car.objects.all()
+    cars = Car.objects.all().order_by('-updated_at')
     categories = Category.objects.all()
 
     search_by = request.GET.get('search_by', 'model')
@@ -310,7 +313,7 @@ def manage_car_view(request):
 
 def manage_category_view(request):
     agent = RentalAgent.objects.get(user=request.user)
-    categories = Category.objects.all()
+    categories = Category.objects.all().order_by('-updated_at')
 
     if request.method == 'POST':
         category_form = CategoryForm(request.POST)
@@ -332,7 +335,7 @@ def manage_rental_view(request):
     agent = RentalAgent.objects.get(user=request.user)
     customers = Customer.objects.all()
     cars = Car.objects.all()
-    rental = Rental.objects.all()
+    rental = Rental.objects.all().order_by('-updated_at')
 
     if request.method == 'POST':
         rental_form = RentalForm(request.POST)
@@ -355,7 +358,7 @@ def manage_rental_view(request):
 def manage_payment_view(request):
     agent = RentalAgent.objects.get(user=request.user)
     rental = Rental.objects.all()
-    payments = Payment.objects.all()
+    payments = Payment.objects.all().order_by('-updated_at')
 
     if request.method == 'POST':
         payment_form = PaymentForm(request.POST)

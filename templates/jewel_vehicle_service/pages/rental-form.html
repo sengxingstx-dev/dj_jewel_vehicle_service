@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-{% load humanize %}
+{% load custom_humanize %}
 <html>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>
@@ -99,6 +99,34 @@
     .step.finish {
       background-color: #04aa6d;
     }
+
+    /* Styles for custom alert */
+    .custom-alert-container {
+        display: none;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+      }
+      .custom-alert {
+        background-color: #ffffff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        width: 300px;
+        position: relative;
+      }
+      .close-button {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        cursor: pointer;
+      }
   </style>
   <body>
     <form id="regForm" action="{% url 'book-now' %}" method="POST" enctype="multipart/form-data">
@@ -106,7 +134,7 @@
       <!-- Input field for the total value -->
       <input type="hidden" name="customer" value="{{ customer.id }}">
       <input type="hidden" name="car" value="{{ car.id }}">
-      <input type="hidden" name="amount" value="{{ car.price }}">
+      <input type="hidden" name="amount" id="car-price" value="{{ car.price }}">
 
       <h1 class="text-uppercase">Rental Form</h1>
       <!-- One "tab" for each step in the form: -->
@@ -167,11 +195,11 @@
         </p>
         <p>
           <label for="start-date">Pick start date</label>
-          <input type="datetime-local" id="start-date" name="rental_start_date" class="form-control" placeholder="Enter Start Date" oninput="this.className = ''" />
+          <input type="datetime-local" id="start-date" name="rental_start_date" class="form-control" placeholder="Enter Start Date" oninput="validateDates(); this.className = ''" />
         </p>
         <p>
           <label for="end-date">Pick end date</label>
-          <input type="datetime-local" id="end-date" name="rental_end_date" class="form-control" placeholder="Enter End Date" oninput="this.className = ''" />
+          <input type="datetime-local" id="end-date" name="rental_end_date" class="form-control" placeholder="Enter End Date" oninput="validateDates(); this.className = ''" />
         </p>
       </div>
       </div>
@@ -198,11 +226,11 @@
                     </p>
                   </div>
                   <div class="d-flex justify-content-between mb-2">
-                    <p class="textmuted">Qty</p>
-                    <p class="fs-14 fw-bold">1</p>
+                    <p class="textmuted">Quantity</p>
+                    <p class="fs-14 fw-bold" id="qty">1</p>
                   </div>
                   <div class="d-flex justify-content-between mb-2">
-                    <p class="textmuted">Subtotal</p>
+                    <p class="textmuted">Price</p>
                     <p class="fs-14 fw-bold">
                       <span class="fas fa-kip-sign pe-1"></span>{{ car.price|intcomma }} Kip
                     </p>
@@ -221,7 +249,7 @@
                     <p class="textmuted fw-bold">Total</p>
                     <div class="d-flex align-text-top">
                       <span class="fas fa-kip-sign mt-1 pe-1 fs-14"></span
-                      ><span class="h4">{{ car.price|intcomma }} Kip</span>
+                      ><span class="h4" id="price-display">{{ car.price|intcomma }} Kip</span>
                     </div>
                   </div>
                 </div>
@@ -264,6 +292,14 @@
       </div>
     </form>
 
+    <!-- Custom alert container -->
+    <div id="custom-alert-container" class="custom-alert-container">
+      <div class="custom-alert">
+          <span class="close-button" onclick="closeAlert()">&times;</span>
+          <span id="alert-message"></span>
+      </div>
+    </div>
+
     <script>
       var currentTab = 0; // Current tab is set to be the first tab (0)
       showTab(currentTab); // Display the current tab
@@ -305,6 +341,11 @@
         }
         // Otherwise, display the correct tab:
         showTab(currentTab);
+
+        // Calculate the total cost when moving to the next step
+        if (n === 1) {
+          calculateTotalCost();
+        }
       }
 
       function validateForm() {
@@ -342,6 +383,70 @@
         }
         //... and adds the "active" class on the current step:
         x[n].className += " active";
+      }
+
+      function intComma(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
+
+      function calculateTotalCost() {
+        // Get the car price
+        var carPrice = parseFloat(document.getElementById("car-price").value);
+
+        // Get the start and end dates
+        var startDate = new Date(document.getElementById("start-date").value);
+        var endDate = new Date(document.getElementById("end-date").value);
+        
+        // Calculate the number of days
+        var timeDiff = endDate - startDate;
+        var daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        
+        // Calculate the total cost
+        var totalCost = carPrice * daysDiff;
+
+        // Format the total cost with commas and two decimal places
+        var formattedTotalCost = intComma(totalCost.toFixed(2));
+
+        // Update the display
+        document.getElementById("price-display").innerHTML = `${formattedTotalCost} Kip`;
+        document.getElementById("qty").innerHTML = `${daysDiff} ${daysDiff > 1 ? 'days' : 'day'}`;
+        document.getElementById("car-price").value = totalCost
+
+        console.log('Car Price: ', carPrice)
+        console.log('Updated Car Price: ', document.getElementById("car-price").value)
+      }
+
+      function validateDates() {
+        var startDate = new Date(document.getElementById("start-date").value);
+        var endDate = new Date(document.getElementById("end-date").value);
+        var currentDate = new Date();
+
+        // Set time parts of startDate and currentDate to 00:00:00
+        startDate.setHours(0, 0, 0, 0);
+        currentDate.setHours(0, 0, 0, 0);
+
+        if (startDate < currentDate) {
+            displayAlert("Start date cannot be in the past");
+            return false;
+        }
+
+        if (startDate >= endDate) {
+            displayAlert("End date must be after start date");
+            return false;
+        }
+        
+        return true;
+      }
+
+      function displayAlert(message) {
+        var alertContainer = document.getElementById("custom-alert-container");
+        var alertMessage = document.getElementById("alert-message");
+        alertMessage.textContent = message;
+        alertContainer.style.display = "flex";
+      }
+
+      function closeAlert() {
+        document.getElementById("custom-alert-container").style.display = "none";
       }
     </script>
   </body>

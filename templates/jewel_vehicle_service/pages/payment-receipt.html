@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% load humanize %}
+{% load custom_humanize %}
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -165,7 +165,8 @@
               </div>
               <div style="flex: 1; text-align: right; margin-top: 1rem;">
                 <h4 style="color: #dc3545; margin-bottom: 0;">Jewel Vehicle Service</h4>
-                <span>jewelvehicleservice.com</span>
+                <span>jewelvehicleservice.com</span><br>
+                <span>+856-20-52436565</span>
               </div>
             </div>
             <div style="margin-top: 1rem;">
@@ -184,10 +185,10 @@
                   <tbody>
                     <tr>
                       <td>{{ payment.rental.car }}</td>
-                      <td>1</td>
+                      <td>{{ nights }}</td>
                       <td>{{ payment.rental.rental_start_date|date:"d-m-Y" }}, {{ payment.rental.rental_start_date|time:"H:i" }}</td>
                       <td>{{ payment.rental.rental_end_date|date:"d-m-Y" }}, {{ payment.rental.rental_end_date|time:"H:i" }}</td>
-                      <td>{{ payment.rental.total_cost|intcomma }}</td>
+                      <td>{{ price|intcomma }}</td>
                       <td>{{ payment.rental.total_cost|intcomma }}</td>
                     </tr>
                   </tbody>

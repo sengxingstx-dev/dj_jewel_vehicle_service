@@ -20,7 +20,7 @@
   <div class="page-breadcrumb">
     <div class="row align-items-center">
       <div class="col-md-6 col-8 align-self-center">
-        <h3 class="page-title mb-0 p-0">Manage Customer</h3>
+        <h3 class="page-title mb-0 p-0">ຈັດການລູກຄ້າ</h3>
         <div class="d-flex align-items-center">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -173,7 +173,7 @@
                   {% for customer in customers %}
                   <tr>
                     <td>{{ customer.id }}</td>
-                    <td><img class="img-fluid img-thumbnail" src="{% if customer.profile_image %}{{ customer.profile_image.url }}{% else %} {{ customer.id }} {% endif %}" alt="customer profile" width="50"></td>
+                    <td><img class="img-fluid img-thumbnail" src="{% if customer.profile_image %}{{ customer.profile_image.url }}{% else %} {% static 'static/default_profiles/default.jpg' %} {% endif %}" alt="customer profile" width="50"></td>
                     <td>{{ customer.user.username }}</td>
                     <td>{{ customer.first_name }}</td>
                     <td>{{ customer.last_name }}</td>

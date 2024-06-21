@@ -21,7 +21,7 @@
   <div class="page-breadcrumb">
     <div class="row align-items-center">
       <div class="col-md-6 col-8 align-self-center">
-        <h3 class="page-title mb-0 p-0">Manage Car</h3>
+        <h3 class="page-title mb-0 p-0">ຈັດການລົດ</h3>
         <div class="d-flex align-items-center">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -129,6 +129,10 @@
                         <input type="text" class="form-control" id="make" name="make" placeholder="">
                       </div>
                       <div class="form-group">
+                        <label for="number_plate">ປ້າຍລົດ</label>
+                        <input type="text" class="form-control" id="number_plate" name="number_plate" placeholder="">
+                      </div>
+                      <div class="form-group">
                         <label for="price">ລາຄາ</label>
                         <input type="number" class="form-control" id="price" name="price" placeholder="">
                       </div>
@@ -171,6 +175,7 @@
                     <th class="border-top-0">ຮູບລົດ</th>
                     <th class="border-top-0">ລຸ້ນ</th>
                     <th class="border-top-0">ຍີ່ຫໍ້</th>
+                    <th class="border-top-0">ປ້າຍລົດ</th>
                     <th class="border-top-0">ລາຄາ</th>
                     <th class="border-top-0">ຫວ່າງ</th>
                     <th class="border-top-0">ປະເພດລົດ</th>
@@ -184,6 +189,7 @@
                     <td><img class="img-fluid img-thumbnail" src="{% if car.car_image %}{{ car.car_image.url }}{% else %} {{ car.id }} {% endif %}" alt="car image" width="50"></td>                
                     <td>{{ car.model }}</td>
                     <td>{{ car.make }}</td>
+                    <td>{{ car.number_plate }}</td>
                     <td>{{ car.price|intcomma }} Kip</td>
                     <td>{{ car.available }}</td>
                     <td>{{ car.category.category_name }}</td>
@@ -241,6 +247,10 @@
                                 <div class="form-group">
                                   <label for="make">ຍີ່ຫໍ້</label>
                                   <input type="text" class="form-control" id="make" name="make" value="{{ car.make }}" placeholder="Enter make">
+                                </div>
+                                <div class="form-group">
+                                  <label for="number_plate">ປ້າຍລົດ</label>
+                                  <input type="text" class="form-control" id="number_plate" name="number_plate" value="{{ car.number_plate }}" placeholder="Enter make">
                                 </div>
                                 <div class="form-group">
                                   <label for="price">ລາຄາ</label>

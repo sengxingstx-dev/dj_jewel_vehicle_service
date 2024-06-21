@@ -80,6 +80,7 @@ class Car(models.Model):
     )
     model = models.CharField(max_length=50)
     make = models.CharField(max_length=50)
+    number_plate = models.CharField(max_length=10, null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     available = models.BooleanField(default=True)

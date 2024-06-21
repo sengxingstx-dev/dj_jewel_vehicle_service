@@ -6,4 +6,4 @@ class CarRentalConfig(AppConfig):
     name = 'apps.car_rental'
 
     def ready(self):
-        from .signals import files
+        from . import signals

@@ -24,8 +24,8 @@ def max_file_size_validator(value):
     max_size_byte = FILE_UPLOAD_MAX_MEMORY_SIZE
     max_size_mb = max_size_byte / (1024**2)
 
-    print('Greater or Not:', value.size > max_size_byte)
-    print('max_size_mb:', value.size / (1024**2))
+    # print('Greater or Not:', value.size > max_size_byte)
+    # print('max_size_mb:', value.size / (1024**2))
 
     if value.size > max_size_byte:
         raise ValidationError(f'File size cannot exceed {max_size_mb} MB.')
